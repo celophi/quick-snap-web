@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Caching.Memory;
 using QuickSnapWeb.Accounts;
 using QuickSnapWeb.Configuration;
+using QuickSnapWeb.Pictures;
 
 namespace QuickSnapWeb;
 public class Program
@@ -18,6 +19,8 @@ public class Program
         builder.Services.AddTransient<IAccountsProvider, AccountsProvider>();
         builder.Services.AddSingleton<IMemoryCache, MemoryCache>();
         builder.Services.AddTransient<IAccountsRepository, AccountsRepository>();
+        builder.Services.AddTransient<IPictureRepository, PictureRepository>();
+        builder.Services.AddTransient<IPictureProvider, PictureProvider>();
 
         builder.Services.Configure<ApiOptions>(builder.Configuration.GetSection("ApiOptions"));
 

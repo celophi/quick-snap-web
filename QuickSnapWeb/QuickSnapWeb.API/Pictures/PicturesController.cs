@@ -32,14 +32,14 @@ public sealed class PicturesController(IHttpContextAccessor _httpContextAccessor
 
     private PictureResponse Map(Picture picture)
     {
-        return new PictureResponse { ContentType = picture.ContentType, Data = picture.Data };
+        return new PictureResponse { ContentType = picture.ContentType, Data = picture.Data, Date = picture.Date };
     }
 
-    private int GetAccountId()
+    private string GetAccountId()
     {
         var claim = _httpContextAccessor.HttpContext.User.Claims
             .FirstOrDefault(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier");
 
-        return int.Parse(claim!.Value);
+        return claim!.Value;
     }
 }

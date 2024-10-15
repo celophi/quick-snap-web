@@ -1,6 +1,6 @@
-﻿namespace QuickSnapWeb.API.Pictures;
+﻿namespace QuickSnapWeb.Pictures;
 
-public class PictureResponse
+public class Picture
 {
     public required DateTime Date { get; init; }
     public required byte[] Data { get; init; }

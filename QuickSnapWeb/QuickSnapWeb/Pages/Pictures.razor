@@ -1,5 +1,15 @@
-﻿<h3>Pictures</h3>
+﻿@page "/pictures"
 
-@code {
+<h3>Pictures</h3>
 
-}
+<div class="image-grid">
+    @foreach (var picture in _pictures)
+    {
+        <div class="image-card">
+            <img src="@GetImageSource(picture.Data)" alt="Image" class="image-thumbnail" />
+            <div class="image-metadata">
+                <span>Date Taken: @picture.Date.ToString("MMMM dd, yyyy")</span>
+            </div>
+        </div>
+    }
+</div>

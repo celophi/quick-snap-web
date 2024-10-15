@@ -9,7 +9,6 @@ public sealed class AccountsProvider(HttpClient _httpClient, IOptions<ApiOptions
     {
         try
         {
-            var url = _apiOptions.Value.ApiUrl;
             var response = await _httpClient.PostAsJsonAsync($"{_apiOptions.Value.ApiUrl}/api/accounts/login", request);
             return (await response.Content.ReadFromJsonAsync<AccountsLoginResponseViewModel>())!;
         }

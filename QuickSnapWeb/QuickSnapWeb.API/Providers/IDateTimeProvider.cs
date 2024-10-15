@@ -1,6 +1,6 @@
 ﻿namespace QuickSnapWeb.API.Providers;
 
-internal interface IDateTimeProvider
+public interface IDateTimeProvider
 {
     /// <summary>
     /// Returns the current date time in UTC format.

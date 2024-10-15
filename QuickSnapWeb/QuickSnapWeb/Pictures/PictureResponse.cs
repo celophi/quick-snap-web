@@ -1,4 +1,4 @@
-﻿namespace QuickSnapWeb.API.Pictures;
+﻿namespace QuickSnapWeb.Pictures;
 
 public class PictureResponse
 {

@@ -2,6 +2,6 @@
 
 public interface IPicturesService
 {
-    Task SubmitAsync(int accountId, byte[] data, string contentType);
-    Task<List<Picture>> GetAsync(int accountId);
+    Task SubmitAsync(string accountId, byte[] data, string contentType);
+    Task<List<Picture>> GetAsync(string accountId);
 }
