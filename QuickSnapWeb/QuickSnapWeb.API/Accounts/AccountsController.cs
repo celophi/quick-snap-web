@@ -12,12 +12,10 @@ public sealed class AccountsController(IAccountService accountService, IHttpCont
     [AllowAnonymous]
     public ActionResult<AccountRegisterApiResponseModel> Register(AccountRegisterApiRequestModel request)
     {
-        var account = accountService.Create(request.Name);
+        var account = accountService.Create(request.Username, request.Password, request.DeviceManufacturer, request.DeviceName);
 
         return new AccountRegisterApiResponseModel
         {
-            Name = account.Name,
-            Code = account.Name,
             Token = account.Token,
         };
     }

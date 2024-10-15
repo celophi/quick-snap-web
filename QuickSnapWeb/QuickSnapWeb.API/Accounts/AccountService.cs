@@ -13,19 +13,21 @@ internal sealed class AccountService(
     IDateTimeProvider dateTimeProvider) : IAccountService
 {
     /// <inheritdoc/>
-    public Account Create(string name)
+    public Account Create(string username, string password, string deviceManufacturer, string deviceName)
     {
-        var randomNumber = randomNumberProvider.Get(1000, 9999);
+        var accountId = randomNumberProvider.Get(1, 99999);
 
         var account = new Account
         {
-            Name = name,
-            Code = randomNumber,
-            Token = this.CreateToken(randomNumber)
+            Username = username,
+            Password = password,
+            DeviceManufacturer = deviceManufacturer,
+            DeviceName = deviceName,
+            Token = this.CreateToken(accountId)
         };
 
         var expiration = dateTimeProvider.UtcNow().AddYears(1);
-        memoryCache.Set(randomNumber, account, expiration);
+        memoryCache.Set(accountId, account, expiration);
 
         return account;
     }
