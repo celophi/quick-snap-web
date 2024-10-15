@@ -2,6 +2,8 @@
 
 public interface IAccountService
 {
+    Task<Account?> LoginAsync(string username, string password);
+
     /// <summary>
     /// Creates a new account and stores it in cache.
     /// Note that this doesn't handle number conflicts. It will just overwrite the entry.

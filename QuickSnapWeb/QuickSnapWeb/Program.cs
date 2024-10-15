@@ -1,5 +1,8 @@
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using Microsoft.Extensions.Caching.Memory;
+using QuickSnapWeb.Accounts;
+using QuickSnapWeb.Configuration;
 
 namespace QuickSnapWeb;
 public class Program
@@ -11,6 +14,12 @@ public class Program
         builder.RootComponents.Add<HeadOutlet>("head::after");
 
         builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+
+        builder.Services.AddTransient<IAccountsProvider, AccountsProvider>();
+        builder.Services.AddSingleton<IMemoryCache, MemoryCache>();
+        builder.Services.AddTransient<IAccountsRepository, AccountsRepository>();
+
+        builder.Services.Configure<ApiOptions>(builder.Configuration.GetSection("ApiOptions"));
 
         await builder.Build().RunAsync();
     }

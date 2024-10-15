@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.IdentityModel.Tokens;
 using QuickSnapWeb.API.Accounts;
+using QuickSnapWeb.API.Pictures;
 using QuickSnapWeb.API.Providers;
 using System.Text;
 
@@ -17,7 +18,20 @@ public class Program
             .AddTransient<IRandomNumberProvider, RandomNumberProvider>()
             .AddTransient<IAccountService, AccountService>()
             .AddSingleton<IMemoryCache, MemoryCache>()
-            .AddTransient<IHttpContextAccessor, HttpContextAccessor>();
+            .AddTransient<IHttpContextAccessor, HttpContextAccessor>()
+            .AddTransient<IPicturesService, PicturesService>()
+            .AddTransient<IHashProvider, HashProvider>();
+
+        builder.Services.AddCors(options =>
+        {
+            options.AddPolicy("AllowAll", policy =>
+            {
+                policy
+                    .AllowAnyOrigin()
+                    .AllowAnyHeader()
+                    .AllowAnyMethod();
+            });
+        });
 
         builder.Services.AddControllers();
 
@@ -48,6 +62,7 @@ public class Program
         });
 
         var app = builder.Build();
+        app.UseCors("AllowAll");
         app.UseHttpsRedirection();
         app.UseAuthentication();
         app.UseAuthorization();

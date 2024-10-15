@@ -9,6 +9,20 @@ namespace QuickSnapWeb.API.Accounts;
 public sealed class AccountsController(IAccountService accountService, IHttpContextAccessor httpContextAccessor)
 {
     [HttpPost]
+    [Route("login")]
+    [AllowAnonymous]
+    public async Task<ActionResult<AccountRegisterApiResponseModel>> Login(AccountLoginApiRequestModel request)
+    {
+        var account = await accountService.LoginAsync(request.Username, request.Password);
+
+        return new AccountRegisterApiResponseModel
+        {
+            Token = account?.Token,
+        };
+    }
+
+    [HttpPost]
+    [Route("register")]
     [AllowAnonymous]
     public ActionResult<AccountRegisterApiResponseModel> Register(AccountRegisterApiRequestModel request)
     {
@@ -18,14 +32,5 @@ public sealed class AccountsController(IAccountService accountService, IHttpCont
         {
             Token = account.Token,
         };
-    }
-
-    [HttpGet]
-    public ActionResult Test()
-    {
-
-        var claims = httpContextAccessor.HttpContext.User.Claims;
-
-        return new OkResult();
     }
 }

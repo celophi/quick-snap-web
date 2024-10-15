@@ -2,5 +2,5 @@
 
 public sealed record AccountRegisterApiResponseModel
 {
-    public required string Token { get; init; }
+    public string? Token { get; init; }
 }

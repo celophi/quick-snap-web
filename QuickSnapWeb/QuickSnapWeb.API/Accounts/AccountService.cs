@@ -8,15 +8,22 @@ using System.Text;
 namespace QuickSnapWeb.API.Accounts;
 
 internal sealed class AccountService(
-    IRandomNumberProvider randomNumberProvider,
-    IMemoryCache memoryCache,
+    IHashProvider _hashProvider,
+    IMemoryCache _memoryCache,
     IDateTimeProvider dateTimeProvider) : IAccountService
 {
+    public async Task<Account?> LoginAsync(string username, string password)
+    {
+        var accountId = _hashProvider.Hash($"{username}:{password}");
+        _memoryCache.TryGetValue(accountId, out Account account);
+
+        return account;
+    }
+
     /// <inheritdoc/>
     public Account Create(string username, string password, string deviceManufacturer, string deviceName)
     {
-        var accountId = randomNumberProvider.Get(1, 99999);
-
+        var accountId = _hashProvider.Hash($"{username}:{password}");
         var account = new Account
         {
             Username = username,
@@ -27,12 +34,12 @@ internal sealed class AccountService(
         };
 
         var expiration = dateTimeProvider.UtcNow().AddYears(1);
-        memoryCache.Set(accountId, account, expiration);
+        _memoryCache.Set(accountId, account, expiration);
 
         return account;
     }
 
-    private string CreateToken(int accountId)
+    private string CreateToken(string accountId)
     {
         var secret = "SuperDuperSecretKeyThatIsSoLongYouWillNeverGuessItBwahaha64Characters!";
         var credentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret)), SecurityAlgorithms.HmacSha512);
@@ -40,7 +47,7 @@ internal sealed class AccountService(
 
         var claims = new List<Claim>()
         {
-            new(JwtRegisteredClaimNames.Sub, accountId.ToString()),
+            new(JwtRegisteredClaimNames.Sub, accountId),
             new(JwtRegisteredClaimNames.Iat, new DateTimeOffset(dateTimeProvider.UtcNow()).ToUnixTimeSeconds().ToString()),
             new(JwtRegisteredClaimNames.Exp, new DateTimeOffset(expiration).ToUnixTimeSeconds().ToString())
         };

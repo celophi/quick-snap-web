@@ -1,7 +1,26 @@
 ﻿@page "/"
 
-<PageTitle>Home</PageTitle>
+<PageTitle>Login</PageTitle>
 
-<h1>Hello, world!</h1>
+<div class="main-content">
 
-Welcome to your new app.
+    <div class="row register-banner">
+        <img src="img/login.png" />
+    </div>
+
+    <EditForm Model="loginModel" OnValidSubmit="OnLogin">
+        <DataAnnotationsValidator />
+
+        <div class="mb-3">
+            <InputText placeholder="Username" @bind-Value="loginModel.Username" class="form-control" />
+            <ValidationMessage For="@(() => loginModel.Username)" />
+        </div>
+
+        <div class="mb-3">
+            <InputText placeholder="Password" @bind-Value="loginModel.Password" type="password" class="form-control" />
+            <ValidationMessage For="@(() => loginModel.Password)" />
+        </div>
+
+        <button type="submit" class="btn btn-primary register-btn">Login</button>
+    </EditForm>
+</div>
