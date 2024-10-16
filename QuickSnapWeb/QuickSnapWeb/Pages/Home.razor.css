@@ -1,2 +1,36 @@
-﻿body {
+﻿.main-content {
+    max-width: 400px; /* Center and limit the width of the login form */
+    margin: 0 auto; /* Center the content horizontally */
+    padding: 20px; /* Add some padding for better spacing */
+}
+
+.login-banner {
+    margin-bottom: 40px; /* Add space below the image */
+    text-align: center;
+    max-width: 100%;
+}
+
+.login-image {
+    max-width: 100%; /* Ensures the image scales within its container */
+    height: auto; /* Maintains aspect ratio */
+    display: block; /* Centers the image */
+    margin: 0 auto; /* Horizontally center the image */
+}
+
+.form-control {
+    width: 100%; /* Ensure form fields take full width */
+}
+
+.login-btn {
+    width: 100%; /* Ensure button takes full width */
+}
+
+@media (max-width: 576px) {
+    .main-content {
+        padding: 10px; /* Adjust padding for smaller screens */
+    }
+
+    .login-image {
+        max-height: 150px; /* Reduce the image size on small screens */
+    }
 }
