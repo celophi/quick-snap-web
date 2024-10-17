@@ -22,7 +22,7 @@ To set up and run this project, follow these steps:
 ### Running the Application
 1. Clone this repository.
     ```bash
-    git clone https://github.com/YOUR-USERNAME/quick-snap-server.git
+    git clone https://github.com/celophi/quick-snap-server.git
     ```
 2. Run both the **API** and **Web** projects within the solution:
     - **API Project**: This serves as the backend for managing the account and picture data.
